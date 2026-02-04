@@ -24,7 +24,6 @@ router.post("/", async (req, res) => {
 	if (!titre) return res.status(400).send("titre requis");
 
 	try {
-		//TODO : ECRIRE LA REQUETE PREPAREE
 		const [result, fields] = await pool.query("INSERT INTO films (titre) VALUES (?)", [titre]);
 		if (result.affectedRows === 1) {
 			console.log("Insert successful! Inserted ID:", result.insertId);
@@ -42,10 +41,18 @@ router.post("/", async (req, res) => {
 router.patch("/:id", async (req, res) => {
 	const { titre } = req.body;
 	if (!titre) return res.status(400).send("Nouveau titre requis");
-
-	//TODO : ECRIRE LA REQUETE PREPAREE
-	if (result.affectedRows === 0) return res.status(404).send("Film non trouvé");
-	res.send("Titre mis à jour");
+	const [result, fields] = await pool.query("UPDATE films SET titre=? WHERE id=?", [titre, req.params.id]);
+	if (result.affectedRows > 0) {
+		console.log("Update successful!");
+		res.status(201).send("Titre mis à jour");
+	} else {
+		console.log("Update failed.");
+		res.status(500).send("Film pas modifié");
+	}
+	try {
+	} catch (err) {
+		res.status(500).send("Erreur : " + err.message);
+	}
 });
 
 // 5. DELETE /:id : suppression
