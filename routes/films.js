@@ -1,21 +1,21 @@
 const express = require("express");
 const router = express.Router();
 
-const { getAllFilms, getFilmById, addFilm, updateFilm, deleteFilm } = require("../controller/filmController");
+const FilmController = require("../controller/FilmController");
 
 // 1. GET / : liste complète
-router.get("/", getAllFilms);
+router.get("/", FilmController.getAll);
 
 // 2. GET /:id : film par ID
-router.get("/:id", getFilmById);
+router.get("/:id", FilmController.getById);
 
 // 3. POST / : ajout d’un film
-router.post("/", addFilm);
+router.post("/", FilmController.create);
 
 // 4. PATCH /:id : modification du titre
-router.patch("/:id", updateFilm);
+router.patch("/:id", FilmController.update);
 
 // 5. DELETE /:id : suppression
-router.delete("/:id", deleteFilm);
+router.delete("/:id", FilmController.delete);
 
 module.exports = router;
