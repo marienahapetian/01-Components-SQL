@@ -1,10 +1,10 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const filmsRoutes = require('./films');
+const filmsRoutes = require("./routes/films");
 
 app.use(express.json());
-app.use('/films', filmsRoutes);
+app.use("/films", filmsRoutes);
 
 app.listen(3000, () => {
-  console.log('Serveur démarré sur http://localhost:3000');
+	console.log("Serveur démarré sur http://localhost:3000");
 });
