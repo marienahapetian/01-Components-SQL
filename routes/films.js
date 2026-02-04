@@ -20,12 +20,19 @@ router.get("/:id", async (req, res) => {
 
 // 3. POST / : ajout d’un film
 router.post("/", async (req, res) => {
-	const { id, titre } = req.body;
-	if (!id || !titre) return res.status(400).send("id et titre requis");
+	const { titre } = req.body;
+	if (!titre) return res.status(400).send("titre requis");
 
 	try {
 		//TODO : ECRIRE LA REQUETE PREPAREE
-		res.status(201).send("Film ajouté");
+		const [result, fields] = await pool.query("INSERT INTO films (titre) VALUES (?)", [titre]);
+		if (result.affectedRows === 1) {
+			console.log("Insert successful! Inserted ID:", result.insertId);
+			res.status(201).send("Film ajouté");
+		} else {
+			console.log("Insert failed.");
+			res.status(500).send("Film pas ajouté");
+		}
 	} catch (err) {
 		res.status(500).send("Erreur : " + err.message);
 	}
