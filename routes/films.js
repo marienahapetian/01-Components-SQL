@@ -57,9 +57,13 @@ router.patch("/:id", async (req, res) => {
 
 // 5. DELETE /:id : suppression
 router.delete("/:id", async (req, res) => {
-	const [result] = await db.execute("DELETE FROM films WHERE id = ?", [req.params.id]);
-	if (result.affectedRows === 0) return res.status(404).send("Film non trouvé");
-	res.send("Film supprimé");
+	try {
+		const [result] = await pool.query("DELETE FROM films WHERE id = ?", [req.params.id]);
+		if (result.affectedRows === 0) return res.status(404).send("Film non trouvé");
+		res.status(200).send("Film supprimé");
+	} catch (err) {
+		res.status(500).send("Erreur : " + err.message);
+	}
 });
 
 module.exports = router;
