@@ -1,0 +1,26 @@
+{
+  "name": "01-components-sql",
+  "version": "1.0.0",
+  "description": "Ce projet a pour but de te faire manipuler une **base de données relationnelle MySQL** depuis un projet **Node.js avec Express**, en appliquant les **bonnes pratiques de sécurité** : utilisation de **requêtes préparées** pour se protéger des **injections SQL**.",
+  "homepage": "https://github.com/marienahapetian/01-Components-SQL#readme",
+  "bugs": {
+    "url": "https://github.com/marienahapetian/01-Components-SQL/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marienahapetian/01-Components-SQL.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "db.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "mysql2": "^3.16.3"
+  }
+}

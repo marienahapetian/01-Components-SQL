@@ -1,1 +1,3 @@
 correction/
+node_modules
+.env
