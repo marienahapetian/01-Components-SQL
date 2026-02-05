@@ -18,6 +18,8 @@ npm install
 
 ### 💡 How to contribute to the project
 
+---
+
 1. **Fork** the Github project
 2. Create a **new branch**
 3. Apply your changes to the code
@@ -26,10 +28,14 @@ npm install
 
 ### 👩‍💻 Coding conventions
 
+---
+
 - 2 spaces for indentation
 - Variables and functions named in English
 
 ### ⬆️ Commit conventions
+
+---
 
 Use following prefixes:
 
@@ -37,6 +43,5 @@ Use following prefixes:
 - _fix_
 - _refactor_
 - _docs_
-- ...
 
 ### 🙌 Thank you for your contribution
