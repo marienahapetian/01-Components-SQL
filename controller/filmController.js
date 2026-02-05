@@ -36,17 +36,19 @@ class FilmController {
 	static async update(req, res) {
 		const { titre } = req.body;
 		if (!titre) return res.status(400).send("Nouveau titre requis");
-		const [result, fields] = await pool.query("UPDATE films SET titre=? WHERE id=?", [titre, req.params.id]);
-		if (result.affectedRows > 0) {
-			console.log("Update successful!");
-			res.status(201).send("Titre mis à jour");
-		} else {
-			console.log("Update failed.");
-			res.status(500).send("Film pas modifié");
-		}
+
 		try {
-		} catch (err) {
-			res.status(500).send("Erreur : " + err.message);
+			const result = await FilmRepository.update(req.params.id, req.body);
+
+			if (result.affectedRows) {
+				console.log("Update successful!");
+				res.status(201).send("Titre mis à jour");
+			} else {
+				console.log("Update failed.");
+				res.status(500).send("Film pas modifié");
+			}
+		} catch (e) {
+			res.status(500).send("Erreur : " + e.message);
 		}
 	}
 

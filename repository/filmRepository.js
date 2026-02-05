@@ -1,5 +1,6 @@
 const pool = require("../config/db");
 const InsertFailed = require("../exception/InsertFailed");
+const UpdateFailed = require("../exception/UpdateFailed");
 
 class FilmRepository {
 	static async getAll() {
@@ -22,6 +23,18 @@ class FilmRepository {
 			return result;
 		} catch (e) {
 			throw new InsertFailed(e.message);
+		}
+	}
+
+	static async update(id, data) {
+		const { titre, duree_minutes, annee_sortie } = data;
+
+		try {
+			const [result] = await pool.query("UPDATE films SET titre = ?, duree_minutes = ?, annee_sortie = ? WHERE id=?", [titre, duree_minutes, annee_sortie, id]);
+
+			return result;
+		} catch (e) {
+			throw new UpdateFailed(e.message);
 		}
 	}
 }
