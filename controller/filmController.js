@@ -10,7 +10,7 @@ class FilmController {
 	}
 
 	static async getById(req, res) {
-		const films = await FilmRepository.getFilmById(req.params.id);
+		const films = await FilmRepository.getById(req.params.id);
 		if (films.length === 0) return res.status(404).send("Film non trouvé");
 		res.json(films[0]);
 	}
@@ -20,16 +20,16 @@ class FilmController {
 		if (!titre) return res.status(400).send("titre requis");
 
 		try {
-			const [result, fields] = await pool.query("INSERT INTO films (titre) VALUES (?)", [titre]);
-			if (result.affectedRows === 1) {
-				console.log("Insert successful! Inserted ID:", result.insertId);
+			const films = await FilmRepository.create(req.body);
+			if (films) {
+				console.log("Insert successful! Inserted ID:");
 				res.status(201).send("Film ajouté");
 			} else {
 				console.log("Insert failed.");
-				res.status(500).send("Film pas ajouté");
+				res.status(500).send("Error while creating the film: Film pas ajouté");
 			}
 		} catch (err) {
-			res.status(500).send("Erreur : " + err.message);
+			res.status(500).send("Erreur Message in Controller: " + err.message);
 		}
 	}
 

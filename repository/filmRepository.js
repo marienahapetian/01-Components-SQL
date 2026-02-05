@@ -1,4 +1,5 @@
 const pool = require("../config/db");
+const InsertFailed = require("../exception/InsertFailed");
 
 class FilmRepository {
 	static async getAll() {
@@ -9,9 +10,22 @@ class FilmRepository {
 		return films;
 	}
 
-	static async getFilmById(id) {
+	static async getById(id) {
 		const [films] = await pool.query("SELECT * FROM films WHERE id=? LIMIT 1", [id]);
 		return films;
+	}
+
+	static async create(data) {
+		console.log("create data", data);
+		const { titre, duree_minutes, annee_sortie } = data;
+		try {
+			const [films] = await pool.query("INSERT INTO films (titre, duree_minutes, annee_sortie) VALUES (?,?,?)", [titre, duree_minutes, annee_sortie]);
+			console.log("created", films);
+			return films;
+		} catch (e) {
+			console.log("Error Message in Repository: ", e.message);
+			throw new InsertFailed(e.message);
+		}
 	}
 }
 
