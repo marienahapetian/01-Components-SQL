@@ -54,7 +54,7 @@ class FilmController {
 
 	static async delete(req, res) {
 		try {
-			const [result] = await pool.query("DELETE FROM films WHERE id = ?", [req.params.id]);
+			const result = await FilmRepository.delete(req.params.id);
 			if (result.affectedRows === 0) return res.status(404).send("Film non trouvé");
 			res.status(200).send("Film supprimé");
 		} catch (err) {

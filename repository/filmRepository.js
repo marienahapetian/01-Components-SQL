@@ -1,4 +1,5 @@
 const pool = require("../config/db");
+const DeleteFailed = require("../exception/DeleteFailed");
 const InsertFailed = require("../exception/InsertFailed");
 const UpdateFailed = require("../exception/UpdateFailed");
 
@@ -35,6 +36,15 @@ class FilmRepository {
 			return result;
 		} catch (e) {
 			throw new UpdateFailed(e.message);
+		}
+	}
+
+	static async delete(id) {
+		try {
+			const [result] = await pool.query("DELETE FROM films WHERE id = ?", [id]);
+			return result;
+		} catch (e) {
+			throw new DeleteFailed(e.message);
 		}
 	}
 }
