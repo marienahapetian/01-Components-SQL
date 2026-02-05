@@ -20,9 +20,9 @@ class FilmController {
 		if (!titre) return res.status(400).send("titre requis");
 
 		try {
-			const films = await FilmRepository.create(req.body);
-			if (films) {
-				console.log("Insert successful! Inserted ID:");
+			const result = await FilmRepository.create(req.body);
+			if (result.affectedRows) {
+				console.log("Insert successful! Inserted ID:  ", result.insertId);
 				res.status(201).send("Film ajouté");
 			} else {
 				console.log("Insert failed.");

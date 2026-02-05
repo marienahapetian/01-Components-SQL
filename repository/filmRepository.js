@@ -16,14 +16,11 @@ class FilmRepository {
 	}
 
 	static async create(data) {
-		console.log("create data", data);
 		const { titre, duree_minutes, annee_sortie } = data;
 		try {
-			const [films] = await pool.query("INSERT INTO films (titre, duree_minutes, annee_sortie) VALUES (?,?,?)", [titre, duree_minutes, annee_sortie]);
-			console.log("created", films);
-			return films;
+			const [result] = await pool.query("INSERT INTO films (titre, duree_minutes, annee_sortie) VALUES (?,?,?)", [titre, duree_minutes, annee_sortie]);
+			return result;
 		} catch (e) {
-			console.log("Error Message in Repository: ", e.message);
 			throw new InsertFailed(e.message);
 		}
 	}
